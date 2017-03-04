@@ -49,7 +49,7 @@
 /dev/dpl_ctrl             0660   usb        usb
 
 #permissions for CSVT
-/dev/smd11                0660   system     loop_radio
+/dev/smd11                0660   radio      radio
 
 /dev/radio0               0640   system     system
 /dev/rfcomm0              0660   bluetooth  bluetooth
@@ -116,6 +116,8 @@
 /dev/jpeg3                0660   system     camera
 /dev/adsprpc-smd          0664   system     system
 /dev/system_health_monitor 0640  radio      system
+/dev/fpc1020              0666   system     system
+
 # wlan
 /dev/wcnss_wlan           0660   system     system
 /dev/wcnss_ctrl           0660   system     system
@@ -250,22 +252,73 @@
 /dev/ontario              0640   system     system
 
 # Add device block for FRP
-/dev/block/platform/soc.0/7824900.sdhci/by-name/config    0660   system     system
+/dev/block/platform/soc.0/7824900.sdhci/by-name/config        0660   system     system
+/dev/block/platform/soc.0/7824900.sdhci/by-name/persistent    0660   system     system
 
-# cpufreq_governor
-/sys/devices/system/cpu/cpu*	cpufreq/interactive/above_hispeed_delay    0660  system system
-/sys/devices/system/cpu/cpu*	cpufreq/interactive/align_windows          0660  system system
-/sys/devices/system/cpu/cpu*	cpufreq/interactive/boost                  0660  system system
-/sys/devices/system/cpu/cpu*	cpufreq/interactive/boostpulse             0660  system system
-/sys/devices/system/cpu/cpu*	cpufreq/interactive/boostpulse_duration    0660  system system
-/sys/devices/system/cpu/cpu*	cpufreq/interactive/go_hispeed_load        0660  system system
-/sys/devices/system/cpu/cpu*	cpufreq/interactive/hispeed_freq           0660  system system
-/sys/devices/system/cpu/cpu*	cpufreq/interactive/io_is_busy             0660  system system
-/sys/devices/system/cpu/cpu*	cpufreq/interactive/max_freq_hysteresis    0660  system system
-/sys/devices/system/cpu/cpu*	cpufreq/interactive/min_sample_time        0660  system system
-/sys/devices/system/cpu/cpu*	cpufreq/interactive/target_loads           0660  system system
-/sys/devices/system/cpu/cpu*	cpufreq/interactive/timer_rate             0660  system system
-/sys/devices/system/cpu/cpu*	cpufreq/interactive/timer_slack            0660  system system
-/sys/devices/system/cpu/cpu*	cpufreq/interactive/use_migration_notif    0660  system system
-/sys/devices/system/cpu/cpu*	cpufreq/interactive/use_sched_load         0660  system system
+# For lirc
+/dev/lirc0          0660   system     system
 
+# FPC
+/sys/devices/soc.0/fpc_fpc1020.*        irq             0660        system      system
+/sys/devices/soc.0/fpc_fpc1020.*        enable_wakeup   0660        system      system
+
+# sensor
+/dev/iio:device*      0760  system   radio
+
+# accel, gyro
+/sys/devices/iio:device*		0760  system   radio
+/sys/devices/iio:device* name		0760  system   radio
+/sys/devices/iio:device* sampling_frequency		0760  system   radio
+/sys/devices/iio:device* sampling_frequency_available	0760  system   radio
+/sys/devices/iio:device* buffer		0760  system   radio
+/sys/devices/iio:device* buffer/enable	0760  system   radio
+/sys/devices/iio:device* buffer/length	0760  system   radio
+/sys/devices/iio:device* trigger	0760  system   radio
+/sys/devices/iio:device* trigger/current_trigger	0760  system   radio
+/sys/devices/iio:device* scan_elements		0760  system   radio
+/sys/devices/iio:device* scan_elements/in_accel_x_en	0760  system   radio
+/sys/devices/iio:device* scan_elements/in_accel_y_en	0760  system   radio
+/sys/devices/iio:device* scan_elements/in_accel_z_en	0760  system   radio
+/sys/devices/iio:device* scan_elements/in_timestamp_en	0760  system   radio
+/sys/devices/iio:device* scan_elements/in_anglvel_x_en	0760  system   radio
+/sys/devices/iio:device* scan_elements/in_anglvel_y_en	0760  system   radio
+/sys/devices/iio:device* scan_elements/in_anglvel_z_en	0760  system   radio
+/sys/devices/iio:device* scan_elements/in_sign_motion_en	0760  system   radio
+/sys/devices/iio:device* scan_elements/in_step_counter_en	0760  system   radio
+/sys/devices/iio:device* scan_elements/in_step_detector_en	0760  system   radio
+/sys/devices/iio:device* scan_elements/in_tilt_en		0760  system   radio
+/sys/devices/iio:device* self_test		0760  system   radio
+/sys/devices/iio:device* self_test_available	0760  system   radio
+/sys/devices/iio:device* self_test_run		0760  system   radio
+/sys/devices/iio:device* in_accel_scale_available	0760  system   radio
+/sys/devices/iio:device* in_accel_x_raw			0760  system   radio
+/sys/devices/iio:device* in_accel_y_raw			0760  system   radio
+/sys/devices/iio:device* in_accel_z_raw			0760  system   radio
+/sys/devices/iio:device* in_accel_x_scale		0760  system   radio
+/sys/devices/iio:device* in_accel_y_scale		0760  system   radio
+/sys/devices/iio:device* in_accel_z_scale		0760  system   radio
+/sys/devices/iio:device* in_anglvel_scale_available	0760  system   radio
+/sys/devices/iio:device* in_anglvel_x_raw		0760  system   radio
+/sys/devices/iio:device* in_anglvel_y_raw		0760  system   radio
+/sys/devices/iio:device* in_anglvel_z_raw		0760  system   radio
+/sys/devices/iio:device* in_anglvel_x_scale		0760  system   radio
+/sys/devices/iio:device* in_anglvel_y_scale		0760  system   radio
+/sys/devices/iio:device* in_anglvel_z_scale		0760  system   radio
+/sys/devices/iio:device* in_step_counter_raw		0760  system   radio
+/sys/devices/iio:device* max_delivery_rate		0760  system   radio
+/sys/devices/iio:device* reset_counter			0760  system   radio
+/sys/devices/iio:device* dev				0760  system   radio
+/sys/devices/iio:device* uevent				0760  system   radio
+/sys/devices/iio:device* power				0760  system   radio
+/sys/devices/iio:device* power/autosuspend_delay_ms	0760  system   radio
+/sys/devices/iio:device* power/control			0760  system   radio
+/sys/devices/iio:device* power/runtime_active_time	0760  system   radio
+/sys/devices/iio:device* power/runtime_status		0760  system   radio
+/sys/devices/iio:device* power/runtime_suspended_time	0760  system   radio
+/sys/devices/iio:device* events				0760  system   radio
+/sys/devices/iio:device* events/in_sign_motion_thresh_rising_en		0760  system   radio
+/sys/devices/iio:device* events/in_sign_motion_thresh_rising_value	0760  system   radio
+/sys/devices/iio:device* events/in_step_detector_thresh_rising_en	0760  system   radio
+/sys/devices/iio:device* events/in_step_detector_thresh_rising_value	0760  system   radio
+/sys/devices/iio:device* events/in_tilt_thresh_rising_en		0760  system   radio
+/sys/devices/iio:device* events/in_tilt_thresh_rising_value		0760  system   radio
