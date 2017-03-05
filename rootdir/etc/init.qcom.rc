@@ -1352,6 +1352,10 @@ on property:sys.boot_completed=1
     # CPE fw_name used by sound trigger HAL
     chown media audio /sys/kernel/wcd_cpe0/fw_name
 
+on property:vold.decrypt=trigger_restart_framework  
+    start wcnss-service
+    
+
 on property:persist.env.fastdorm.enabled=true
     setprop persist.radio.data_no_toggle 1
 
@@ -1398,6 +1402,44 @@ on property:hw.fm.init=0
 
 on property:hw.fm.init=1
     write /sys/module/radio_iris_transport/parameters/fmsmd_set 1
+	
+# QMUX must be in multiple groups to support external process connections
+ service qmuxd /system/bin/qmuxd
+     class main
+     user root
+     group radio audio bluetooth gps nfc qcom_diag
+     writepid /dev/cpuset/system-background/tasks
+ 
+ service netmgrd /system/bin/netmgrd
+     class main
+     writepid /dev/cpuset/system-background/tasks
+
+service ipacm-diag /system/bin/ipacm-diag
+    class main
+    user system
+    socket ipacm_log_file dgram 660 system net_admin
+    group net_admin qcom_diag
+    writepid /dev/cpuset/system-background/tasks
+
+service ipacm /system/bin/ipacm
+    class main
+    user net_admin
+    group net_admin inet
+    writepid /dev/cpuset/system-background/tasks
+	 
+ service qti /system/vendor/bin/qti
+     class main
+     user radio
+     group radio net_raw qcom_diag usb net_admin
+     writepid /dev/cpuset/system-background/tasks
+ 
+ on property:ro.use_data_netmgrd=false
+     # netmgr not supported on specific target
+     stop netmgrd
+ 
+on property:ro.use_data_netmgrd=false
+    # netmgr not supported on specific target
+    stop netmgrd
 
 # Adjust socket buffer to enlarge TCP receive window for high bandwidth
 # but only if ro.data.large_tcp_window_size property is set.
@@ -1440,7 +1482,7 @@ service wpa_supplicant /system/bin/wpa_supplicant \
 service loc_launcher /system/bin/loc_launcher
     #loc_launcher will start as root and set its uid to gps
     class late_start
-    group gps inet qcom_diag wifi
+    group gps inet net_raw qcom_diag net_admin wifi
 
 on property:crypto.driver.load=1
     insmod /system/lib/modules/qce.ko
@@ -1453,12 +1495,36 @@ service hostapd /system/bin/hostapd -dd /data/hostapd/hostapd.conf
     oneshot
     disabled
 
+service cnss_diag /system/bin/cnss_diag --q -f -d
+    class late_start
+    user system
+    group system wifi inet net_admin sdcard_rw media_rw diag
+    oneshot
 service cnss-daemon /system/bin/cnss-daemon -n -l
     class late_start
+    user system
+    group system inet net_admin wifi
+    oneshot
 
 on property:ro.data.large_tcp_window_size=true
     # Adjust socket buffer to enlarge TCP receive window for high bandwidth (e.g. DO-RevB)
     write /proc/sys/net/ipv4/tcp_adv_win_scale  2
+
+
+service ril-daemon /system/bin/rild
+    class main
+    socket rild stream 660 root radio
+    socket sap_uim_socket1 stream 660 bluetooth bluetooth
+    socket rild-debug stream 660 radio system
+    user root
+    group radio cache inet misc audio sdcard_r sdcard_rw qcom_diag diag log net_raw
+
+service ril-daemon2 /system/bin/rild -c 2
+    class main
+    socket rild2 stream 660 root radio
+    socket rild-debug2 stream 660 radio system
+    user root
+    group radio cache inet misc audio sdcard_r sdcard_rw qcom_diag diag log net_raw
 
 service charger /charger
     class charger
@@ -1469,6 +1535,7 @@ service msm_irqbal_lb /system/bin/msm_irqbalance -f /system/vendor/etc/msm_irqba
     class core
     user root
     group root
+	disabled
     writepid /dev/cpuset/system-background/tasks
 
 # Start camera server as daemon
@@ -1498,6 +1565,11 @@ service thermal-engine /system/vendor/bin/thermal-engine
     socket thermal-recv-passive-client stream 0666 system system
     group root
     writepid /dev/cpuset/system-background/tasks
+service wcnss-service /system/bin/wcnss_service
+    class late_start
+    user system
+    group system wifi radio
+    oneshot
 
 service timekeep /system/bin/timekeep restore
     class late_start
@@ -1516,6 +1588,11 @@ service adsprpcd /system/bin/adsprpcd
     user media
     group media
 
+service qseeproxydaemon /system/vendor/bin/qseeproxydaemon
+    class late_start
+    user system
+    group system
+    writepid /dev/cpuset/system-background/tasks
 service per_mgr /system/bin/pm-service
     class core
     user system

@@ -352,6 +352,8 @@ vendor/lib/libscale.so|538727f410c867699ec4403f9b52968a3eb55cbf
 # Graphics firmware - from Mi Max
 etc/firmware/a530_pfp.fw|448f9db8271fefb08348cbc50409e8e95bd93f78
 etc/firmware/a530_pm4.fw|5741a28752355b478d455635bab008028ff7e1c6
+# IPA
+bin/ipacm-diag
 
 # Keystore
 vendor/lib64/hw/keystore.msm8952.so
@@ -439,10 +441,22 @@ vendor/lib/libqmi_encdec.so
 vendor/lib/libqmiservices.so
 
 # Radio
+-framework/qcnvitems.jar
+-framework/qcrilhook.jar
+bin/netmgrd
+bin/qmuxd
+bin/radish
 bin/rmt_storage
 bin/tftp_server
+etc/permissions/qcnvitems.xml
+etc/permissions/qcrilhook.xml
+vendor/bin/qti
+vendor/lib64/libnetmgr.so
+vendor/lib64/libxml.so
+vendor/lib64/libconfigdb.so
 vendor/lib64/libmdmdetect.so
 vendor/lib/libmdmdetect.so
+vendor/lib/libxml.so
 
 # SEC
 lib64/libsecnativefeature.so
@@ -474,6 +488,7 @@ vendor/lib/mediadrm/libwvdrmengine.so|301e0ef26cfc3a22efd52ebf4bb095d0a33bc68d
 
 # WiFi
 bin/cnss-daemon
+bin/cnss-diag
 
 # WiFi Firmware
 etc/firmware/bdwlan30.bin
