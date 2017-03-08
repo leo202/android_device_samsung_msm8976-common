@@ -483,3 +483,8 @@ etc/firmware/qwlan30.bin
 etc/firmware/utf30.bin
 etc/firmware/utfbd30.bin
 etc/firmware/utfbd30_R01.bin
+etc/firmware/BDWLAN30.B0A
+etc/firmware/BDWLAN30.B0E
+etc/firmware/BDWLAN30.B01
+etc/firmware/BDWLAN30.B05
+etc/firmware/BDWLAN30.B06
