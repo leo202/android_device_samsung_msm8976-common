@@ -476,11 +476,10 @@ vendor/lib/mediadrm/libwvdrmengine.so|301e0ef26cfc3a22efd52ebf4bb095d0a33bc68d
 bin/cnss-daemon
 
 # WiFi Firmware
-#etc/firmware/bdwlan30.bin
-#etc/firmware/bdwlan30_R01.bin
+etc/firmware/bdwlan30.bin
+etc/firmware/bdwlan30_R01.bin
 etc/firmware/otp30.bin
 etc/firmware/qwlan30.bin
-etc/firmware/qwlan30i.bin
 etc/firmware/utf30.bin
 etc/firmware/utfbd30.bin
 etc/firmware/utfbd30_R01.bin
