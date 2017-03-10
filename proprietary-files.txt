@@ -474,4 +474,4 @@ vendor/lib/mediadrm/libwvdrmengine.so|301e0ef26cfc3a22efd52ebf4bb095d0a33bc68d
 
 # WiFi
 bin/wcnss_service
-
+bin/cnss-daemon
