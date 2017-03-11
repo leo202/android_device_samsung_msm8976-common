@@ -118,6 +118,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     fingerprintd \
     fingerprint.msm8952
+# FM
+PRODUCT_PACKAGES += \
+    FMRadio \
+    libfmjni
 
 # For android_filesystem_config.h
 PRODUCT_PACKAGES += \
