@@ -89,10 +89,20 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     Gello
 
+
 # Camera
 PRODUCT_PACKAGES += \
     camera.msm8952 \
     libc_shim
+
+# Connectivity Engine support (CNE)
+PRODUCT_PACKAGES += \
+    libcnefeatureconfig
+
+# DataServices
+PRODUCT_PACKAGES += \
+    librmnetctl
+
 
 # Display
 PRODUCT_PACKAGES += \
@@ -102,6 +112,7 @@ PRODUCT_PACKAGES += \
     hwcomposer.msm8952 \
     memtrack.msm8952 \
     liboverlay
+
 
 # Fingerprint
 PRODUCT_PACKAGES += \
